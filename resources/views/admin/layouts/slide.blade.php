@@ -19,8 +19,8 @@
                 <li class="active">
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="true"><i class="mdi mdi-gauge"></i><span class="hide-menu">商城系统 </span></a>
                     <ul aria-expanded="true" class="collapse">
-                        <li><a href="index.html">栏目管理</a></li>
-                        <li><a href="index.html">商品管理</a></li>
+                        <li><a href="{{route ('admin.category.index')}}">栏目管理</a></li>
+                        <li><a href="{{route ('admin.good.index')}}">商品管理</a></li>
                     </ul>
                 </li>
 
@@ -32,11 +32,7 @@
     <!-- Bottom points-->
     <div class="sidebar-footer">
         <!-- item-->
-        <a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
-        <!-- item-->
-        <a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-        <!-- item-->
-        <a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+        <a href="{{route ('admin.logout')}}">退出</a>
     </div>
     <!-- End Bottom points-->
 </aside>

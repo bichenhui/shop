@@ -12,7 +12,7 @@
     <!-- Favicon icon -->
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('org/assets/')}}/images/favicon.png">
-    <title>Material Pro Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
+    <title>商城管理系统</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('org/assets/')}}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -27,6 +27,16 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="{{asset('org/assets/')}}/plugins/jquery/jquery.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+    @stack('css')
 </head>
 
 <body class="fix-header card-no-border">
@@ -66,14 +76,7 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            <div class="row page-titles">
-                <div class="col-md-5 col-8 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="http://shop.ishilf.com/admin">首页</a></li>
-                        <li class="breadcrumb-item active">欢迎页面</li>
-                    </ol>
-                </div>
-            </div>
+
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -109,7 +112,7 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<script src="{{asset('org/assets/')}}/plugins/jquery/jquery.min.js"></script>
+
 <script src="{{asset('org/assets/')}}/plugins/bootstrap/js/popper.min.js"></script>
 <script src="{{asset('org/assets/')}}/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="{{asset('org/assets/js')}}/jquery.slimscroll.js"></script>
@@ -121,6 +124,7 @@
 <script src="{{asset('org/assets/')}}/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 <!-- ============================================================== -->
 @include('layouts.message')
+@stack('js')
 </body>
 
 </html>

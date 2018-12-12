@@ -27,4 +27,13 @@ Route::group (['middleware'=>['admin.auth'],'prefix'=>'admin','namespace'=>'Admi
     Route::get('/','IndexController@index')->name ('index');
     //退出
     Route::get ('/logout','LoginController@logout')->name ('logout');
+    //栏目管理
+    Route::resource ('category','CategoryController');
+    //商品管理
+    Route::resource ('good','GoodController');
+});
+//工具类
+Route::group (['prefix'=>'util','namespace'=>'Util','as'=>'util.'],function () {
+    //上传
+    Route::any ('/upload','UploadController@upload')->name ('upload');
 });
