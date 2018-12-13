@@ -31,6 +31,9 @@ Route::group (['middleware'=>['admin.auth'],'prefix'=>'admin','namespace'=>'Admi
     Route::resource ('category','CategoryController');
     //商品管理
     Route::resource ('good','GoodController');
+    //配置项
+    Route::get('config/edit/{name}','ConfigController@edit')->name ('config.edit');
+    Route::post ('config/update/{name}','ConfigController@update')->name ('config.update');
 });
 //工具类
 Route::group (['prefix'=>'util','namespace'=>'Util','as'=>'util.'],function () {

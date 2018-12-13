@@ -45,25 +45,57 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($goods as $good)
                                 <tr>
-                                    <td>1</td>
-                                    <td>@Genelia</td>
-                                    <td>@Genelia</td>
-                                    <td>@Genelia</td>
-                                    <td>@Genelia</td>
-                                    <td>@Genelia</td>
+                                    <td>{{$good['id']}}</td>
+                                    <td>{{$good['title']}}</td>
+                                    <td>
+                                        <img src="{{$good['list_pic']}}" width="30" alt=""/>
+                                    </td>
+                                    <td>{{$good['price']}}</td>
+                                    <td>{{$good->category->name}}</td>
+                                    <td>{{$good['created_at']}}</td>
                                     <td >
-                                        <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                        <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                                        <a href="{{route ('admin.good.edit',$good)}}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                        <a href="javascript:;" onclick="del(this)" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                                        <form action="{{route ('admin.good.destroy',$good)}}"
+                                              method="post">
+                                            @csrf    @method('DELETE')
+                                        </form>
                                     </td>
                                 </tr>
                                 </tbody>
+                                @endforeach
                             </table>
                         </div>
                     </div>
                 </div>
-
+                {{$goods->links()}}
             </div>
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        function del(obj) {
+            swal("确定删除吗?", {
+                buttons: {
+                    cancel: "取消",
+                    catch: {
+                        text: "确定",
+                        value: "catch",
+                    },
+                },
+            })
+                .then((value) => {
+                    switch (value) {
+                        case "catch":
+                            $(obj).next('form').submit();
+                            break;
+                        default:
+                    }
+                });
+        }
+
+    </script>
+@endpush

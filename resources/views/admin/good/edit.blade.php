@@ -15,13 +15,13 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs customtab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link " href="">
+                <a class="nav-link " href="{{route ('admin.good.index')}}">
                     <span class="hidden-sm-up"><i class="ti-home"></i></span>
                     <span class="hidden-xs-down">商品列表</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="">
+                <a class="nav-link active" href="{{route ('admin.good.create')}}">
                     <span class="hidden-sm-up"><i class="ti-user"></i></span> <span
                         class="hidden-xs-down">添加商品</span>
                 </a>
@@ -31,22 +31,22 @@
         <div class="tab-content">
             <div class="card-header"></div>
             <div class="card-body">
-                <form action="{{route ('admin.good.store')}}" method="post"
+                <form action="{{route ('admin.good.update',$good)}}" method="post"
                       class="form-horizontal ">
-                    @csrf
+                    @csrf @method('PUT')
                     <div class="row">
                         <div class="col-9">
                             <!--/row-->
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">商品名称</label>
                                 <div class="col-md-9">
-                                    <input type="text" name="title" value="{{old ('title')}}" placeholder="请输入商品名称" class="form-control">
+                                    <input type="text" name="title" value="{{$good['title']}}" placeholder="请输入商品名称" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">商品价格</label>
                                 <div class="col-md-9">
-                                    <input type="number" name="price" value="{{old ('price')}}" placeholder="请输入商品价格" class="form-control">
+                                    <input type="number" name="price" value="{{$good['price']}}" placeholder="请输入商品价格" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -55,8 +55,8 @@
                                     <select name="category_id" class="form-control custom-select" data-placeholder="Choose a good"
                                             tabindex="1">
                                         <option value="">请选择分类</option>
-                                        @foreach($categories as $category)
-                                            <option value="{{$category['id']}}">{!! $category['_name'] !!}</option>
+                                        @foreach($categories as $v)
+                                            <option @if($v['id'] == $good['category_id']) selected @endif  value="{{$v['id']}}">{{$v['_name']}}</option>
                                         @endforeach
                                     </select>
                                     <small class="form-control-feedback"> 请选择父级商品</small>
@@ -66,8 +66,7 @@
                                 <label class="control-label text-right col-md-3">商品列表图片</label>
                                 <div class="col-md-9">
                                     <div class="layui-upload-drag" id="test10">
-                                        <i class="layui-icon"></i>
-                                        <p>点击上传，或将文件拖拽到此处</p>
+                                        <img src="{{$good['list_pic']}}" width="60" alt=""/>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +76,11 @@
                                     <div class="layui-upload">
                                         <button type="button" class="layui-btn" id="test2">多图片上传</button>
                                         <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
-                                            <div class="layui-upload-list" id="demo2"></div>
+                                            <div class="layui-upload-list" id="demo2">
+                                                @foreach($good['pics'] as $v)
+                                                <img src="{{$v}}" width="80" alt=""/>
+                                                @endforeach
+                                            </div>
                                         </blockquote>
                                     </div>
                                 </div>
@@ -85,13 +88,13 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">商品描述</label>
                                 <div class="col-md-9">
-                                    <textarea  name="description" class="form-control"></textarea>
+                                    <input  name="description" value="{{$good['description']}}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">商品详情</label>
                                 <div class="col-md-9">
-                                    <textarea id="demo" name="content" style="display: none;"></textarea>
+                                    <input id="demo" name="content"  value="{{$good['content']}}" style="display: none;">
 
                                 </div>
                             </div>
@@ -117,7 +120,7 @@
                             <div class="">
                                 <button type="button" @click="add" class="btn btn-success">添加规格</button>
                             </div>
-                            <textarea hidden name="specs" id="" cols="30" rows="10">@{{ specs }}</textarea>
+                            <textarea name="specs" id="" hidden cols="30" rows="10">@{{ specs }}</textarea>
                         </div>
                     </div>
                     <hr>
@@ -223,9 +226,8 @@
         new Vue({
             el:'#app',
             data: {
-                specs:[
-
-                ]
+                specs:
+                    {!! $specs !!}
             },
             methods:{
                 add(){

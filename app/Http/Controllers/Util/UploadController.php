@@ -32,15 +32,16 @@ class UploadController extends Controller
         }
     }
     //验证上传大小
-    public function checkSize($file){
+    private function checkSize($file){
         //$file->getSize()获取上传文件大小
-        if ($file->getSize()>200){
+        if ($file->getSize()> hd_config('upload.upload_size')){
             throw new UploadException('上传文件过大');
         }
     }
     //验证上传类型
-    public function checkType($file){
-        if(!in_array ( strtolower ($file->getClientOriginalExtension()),['jpg','png'])){
+    private function checkType($file){
+//        dd(hd_config ('upload.upload_type'));
+        if(!in_array ( strtolower ($file->getClientOriginalExtension()),explode('|',hd_config('upload.upload_type')))){
             throw new UploadException('类型不允许');
         }
     }

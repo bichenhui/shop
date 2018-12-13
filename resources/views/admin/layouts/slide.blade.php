@@ -23,7 +23,16 @@
                         <li><a href="{{route ('admin.good.index')}}">商品管理</a></li>
                     </ul>
                 </li>
-
+                <li >
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
+                        <i class="mdi mdi-settings"></i>
+                        <span class="hide-menu">配置管理</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li ><a href="{{route ('admin.config.edit',['type'=>'website'])}}" class="active">站点配置</a></li>
+                        <li><a href="{{route ('admin.config.edit',['type'=>'upload'])}}">上传配置</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
